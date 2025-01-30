@@ -8,6 +8,7 @@ from .serializers import PerfilSerializer
 
 @api_view(['GET'])
 def pegarPerfil(request):
+    print(request.data)
     perfis = Perfil.objects.all()
     serializer = PerfilSerializer(perfis, many=True)
     return Response(serializer.data)

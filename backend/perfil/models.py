@@ -4,7 +4,7 @@ from uuid import uuid4
 # Create your models here.
 
 def enviar_imagem_perfil(instance, filename):
-    return f"{instance.id_book}_{filename}"
+    return f"{instance.id_perfil}_{filename}"
 
 class Perfil(models.Model):
     id_perfil = models.UUIDField(primary_key=True, default=uuid4, editable=False)
