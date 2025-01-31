@@ -30,5 +30,5 @@ route.register(r'user/', perfilViewSets.PerfilViewSet, basename="Perfil")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(route.urls)),
-    # path('', include('API.urls')),
+    path('', include('API.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

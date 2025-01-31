@@ -8,8 +8,13 @@ from .serializers import PerfilSerializer
 
 @api_view(['GET'])
 def pegarPerfil(request):
-    print(request.data)
-    perfis = Perfil.objects.all()
+    print(request.query_params)
+    if(request.query_params != {}):
+        nameTagGet = request.query_params['nameTag']
+        perfis = Perfil.objects.filter(nameTag=nameTagGet)
+    else:
+        perfis = Perfil.objects.all()
+
     serializer = PerfilSerializer(perfis, many=True)
     return Response(serializer.data)
 
