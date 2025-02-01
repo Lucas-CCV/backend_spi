@@ -1,22 +1,29 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from perfil.models import Perfil
-from .serializers import PerfilSerializer
+from perfil.models import Perfil, ItensMercado
+from .serializers import PerfilSerializer, ItensMercadoSerializer
 
 # Create your views here.
 
 @api_view(['GET'])
 def pegarPerfil(request):
     print(request.query_params)
+    response = {}
     if(request.query_params != {}):
         nameTagGet = request.query_params['nameTag']
         perfis = Perfil.objects.filter(nameTag=nameTagGet)
+        itensMercado = ItensMercado.objects.filter(perfil=perfis[0].id_perfil)
+
+        serializerItensMercado = ItensMercadoSerializer(itensMercado, many=True)
+        response["ItensMercado"] = serializerItensMercado.data
     else:
         perfis = Perfil.objects.all()
 
-    serializer = PerfilSerializer(perfis, many=True)
-    return Response(serializer.data)
+    serializerPerfil = PerfilSerializer(perfis, many=True)
+    response["perfil"] = serializerPerfil.data
+    
+    return Response(response)
 
 @api_view(['POST'])
 def criarPerfil(request):
