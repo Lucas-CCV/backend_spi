@@ -13,10 +13,12 @@ def pegarPerfil(request):
     if(request.query_params != {}):
         nameTagGet = request.query_params['nameTag']
         perfis = Perfil.objects.filter(nameTag=nameTagGet)
-        itensMercado = ItensMercado.objects.filter(perfil=perfis[0].id_perfil)
+        print(perfis)
+        if(len(perfis) != 0):
+            itensMercado = ItensMercado.objects.filter(perfil=perfis[0].id_perfil)
+            serializerItensMercado = ItensMercadoSerializer(itensMercado, many=True)
+            response["ItensMercado"] = serializerItensMercado.data
 
-        serializerItensMercado = ItensMercadoSerializer(itensMercado, many=True)
-        response["ItensMercado"] = serializerItensMercado.data
     else:
         perfis = Perfil.objects.all()
 
