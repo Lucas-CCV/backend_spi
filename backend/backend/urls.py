@@ -20,15 +20,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rest_framework import routers
-from API import viewsets as perfilViewSets
-
-route =   routers.DefaultRouter()
-route.register(r'user/', perfilViewSets.PerfilViewSet, basename="Perfil")
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(route.urls)),
-    path('', include('API.urls')),
+    path('', include('perfil.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
