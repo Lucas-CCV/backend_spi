@@ -10,13 +10,14 @@ def enviar_imagem_itenMercado(instance, filename):
     return f"{instance.perfil}_{filename}"
 
 class Perfil(models.Model):
-    id_perfil = models.AutoField(primary_key=True, editable=False)
-    nome      = models.CharField(max_length=20)
-    nameTag   = models.CharField(max_length=20)
-    descricao = models.CharField(max_length=100)
-    estrelas  = models.FloatField(default=0)
-    particao  = models.IntegerField(default=100)
-    foto      = models.ImageField(upload_to=enviar_imagem_perfil, blank=True, null=True)
+    id_perfil   = models.AutoField(primary_key=True, editable=False)
+    nome        = models.CharField(max_length=20)
+    nameTag     = models.CharField(max_length=20)
+    descricao   = models.CharField(max_length=100)
+    estrelas    = models.FloatField(default=0)
+    particao    = models.IntegerField(default=100)
+    foto        = models.ImageField(upload_to=enviar_imagem_perfil, blank=True, null=True)
+    outrosSites = models.JSONField(default=dict, blank=True)
 
 class ItensMercado(models.Model):
     id_ItemMercado = models.AutoField(primary_key=True, editable=False)

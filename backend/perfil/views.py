@@ -7,7 +7,7 @@ from .serializers import *
 # Create your views here.
 
 class perfilMercadoAPIView(APIView):
-    serializer_class = {"perfil":PerfilSerializer, "itensMercado" :ItensMercadoSerializer}
+    serializer_class = ItensMercadoSerializer
 
     def get(self, request, *args, **kwargs):
         response = {}
@@ -29,7 +29,7 @@ class perfilMercadoAPIView(APIView):
         return Response(response)
 
 class perfilCarrinhoAPIView(APIView):
-    serializer_class = {"perfil":PerfilSerializer, "itensMercado" :ItensMercadoSerializer, "itensCarrinho": ItensCarrinhoSerializer}
+    serializer_class = ItensCarrinhoSerializer
 
     def get(self, request, *args, **kwargs):
         response = {}
@@ -58,8 +58,23 @@ class perfilCarrinhoAPIView(APIView):
         serialzer = ItensCarrinhoSerializer(itemCarrinho)
         return Response(serialzer.data)
     
+    def post(self, request, *args, **kwargs):
+
+        itemMercado = ItensMercado.objects.get(id_ItemMercado=request.data["itensMercado"])
+        perfilComprador = Perfil.objects.get(id_perfil=request.data["perfilComprador"])
+        
+        itemCarrinho = ItensCarrinho.objects.create(itensMercado    = itemMercado,
+                                                    perfilComprador = perfilComprador,
+                                                    detalhes        = request.data["detalhes"],
+                                                    tipoCor         = request.data["tipoCor"],
+                                                    tipoFundo       = request.data["tipoFundo"])
+
+        serializer = ItensCarrinhoSerializer(itemCarrinho)
+
+        return Response(serializer.data)
+    
 class perfilCompraAPIView(APIView):
-    serializer_class = {"perfil":PerfilSerializer, "itensMercado" :ItensMercadoSerializer, "itensCompra": ItemCompraSerializer}
+    serializer_class = ComprasSerializer
 
     def get(self, request, *args, **kwargs):
         response = {}
