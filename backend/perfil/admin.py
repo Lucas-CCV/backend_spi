@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Perfil, ItensMercado, ItensCarrinho
+from .models import *
 
 # Register your models here.
 
-admin.site.register([Perfil, ItensMercado, ItensCarrinho])
+admin.site.register([Perfil, ItensMercado, ItensCarrinho, Compra, Itemcompra])

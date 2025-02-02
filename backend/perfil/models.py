@@ -9,29 +9,47 @@ def enviar_imagem_perfil(instance, filename):
 def enviar_imagem_itenMercado(instance, filename):
     return f"{instance.perfil}_{filename}"
 
-
 class Perfil(models.Model):
-    id_perfil = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    id_perfil = models.AutoField(primary_key=True, editable=False)
     nome      = models.CharField(max_length=20)
     nameTag   = models.CharField(max_length=20)
-    estrelas  = models.FloatField(default=0)
     descricao = models.CharField(max_length=100)
+    estrelas  = models.FloatField(default=0)
+    particao  = models.IntegerField(default=100)
     foto      = models.ImageField(upload_to=enviar_imagem_perfil, blank=True, null=True)
 
 class ItensMercado(models.Model):
-    id_ItemMercado = models.UUIDField(primary_key=True, default=uuid1, editable=False)
+    id_ItemMercado = models.AutoField(primary_key=True, editable=False)
+    perfil         = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)
     nome           = models.CharField(max_length=20)
     descricao      = models.CharField(max_length=100)
-    preco          = models.FloatField(default=-1)
+    preco          = models.FloatField(default=0)
     foto           = models.ImageField(upload_to=enviar_imagem_itenMercado, blank=True, null=True)
     tiposCor       = models.JSONField(default=dict, blank=True)
     tiposFundo     = models.JSONField(default=dict, blank=True)
-    perfil         = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)
 
 class ItensCarrinho(models.Model):
-    id_ItemCarrinho = models.UUIDField(primary_key=True, default=uuid1, editable=False)
+    id_ItemCarrinho = models.AutoField(primary_key=True, editable=False)
     itensMercado    = models.ForeignKey(ItensMercado, on_delete=models.DO_NOTHING)
     perfilComprador = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)
+    detalhes        = models.CharField(max_length=100)
+    tipoCor         = models.IntegerField(default=0)
+    tipoFundo       = models.IntegerField(default=0)
+
+class Compra(models.Model):
+    id_Crompra      = models.AutoField(primary_key=True, editable=False)
+    perfilComprador = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)
+    valorPago       = models.FloatField(default=0)
+    dataPedido      = models.DateField(auto_now_add=True)
+    dataEntrega     = models.DateField(blank=True, null=True)
+    particao        = models.IntegerField(default=100)
+    estatus         = models.CharField(max_length=20)
+    alerta          = models.CharField(max_length=20, blank=True)
+
+class Itemcompra(models.Model):
+    id_ItemCompra   = models.AutoField(primary_key=True, editable=False)
+    id_Crompra      = models.ForeignKey(Compra, on_delete=models.DO_NOTHING)
+    itensMercado    = models.ForeignKey(ItensMercado, on_delete=models.DO_NOTHING)
     detalhes        = models.CharField(max_length=100)
     tipoCor         = models.IntegerField(default=0)
     tipoFundo       = models.IntegerField(default=0)
