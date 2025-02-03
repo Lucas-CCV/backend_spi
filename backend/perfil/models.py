@@ -7,17 +7,18 @@ def enviar_imagem_perfil(instance, filename):
     return f"{instance.id_perfil}_{filename}"
 
 def enviar_imagem_itenMercado(instance, filename):
-    return f"{instance.perfil}_{filename}"
+    return f"{instance.id_ItemMercado}_{filename}"
 
 class Perfil(models.Model):
     id_perfil   = models.AutoField(primary_key=True, editable=False)
     nome        = models.CharField(max_length=20)
     nameTag     = models.CharField(max_length=20)
-    descricao   = models.CharField(max_length=100)
+    descricao   = models.CharField(max_length=300)
     estrelas    = models.FloatField(default=0)
     particao    = models.IntegerField(default=100)
     foto        = models.ImageField(upload_to=enviar_imagem_perfil, blank=True, null=True)
     outrosSites = models.JSONField(default=dict, blank=True)
+    tags        = models.JSONField(default=dict)
 
 class ItensMercado(models.Model):
     id_ItemMercado = models.AutoField(primary_key=True, editable=False)
@@ -34,8 +35,8 @@ class ItensCarrinho(models.Model):
     itensMercado    = models.ForeignKey(ItensMercado, on_delete=models.DO_NOTHING)
     perfilComprador = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)
     detalhes        = models.CharField(max_length=100)
-    tipoCor         = models.IntegerField(default=0)
-    tipoFundo       = models.IntegerField(default=0)
+    tipoCor         = models.CharField(max_length=20)
+    tipoFundo       = models.CharField(max_length=20)
 
 class Compra(models.Model):
     id_Crompra      = models.AutoField(primary_key=True, editable=False)
@@ -52,5 +53,5 @@ class Itemcompra(models.Model):
     id_Crompra      = models.ForeignKey(Compra, on_delete=models.DO_NOTHING)
     itensMercado    = models.ForeignKey(ItensMercado, on_delete=models.DO_NOTHING)
     detalhes        = models.CharField(max_length=100)
-    tipoCor         = models.IntegerField(default=0)
-    tipoFundo       = models.IntegerField(default=0)
+    tipoCor         = models.CharField(max_length=20)
+    tipoFundo       = models.CharField(max_length=20)
