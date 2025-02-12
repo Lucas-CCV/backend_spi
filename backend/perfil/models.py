@@ -90,4 +90,15 @@ class Itemcompra(models.Model):
 }
 
 
+{
+"cupom":0,
+"detalhes":"teste",
+"id_item_mercado":1,
+"id_perfil_comprador":1,
+"metodo_pagamento":{"tipo":"debito", "final":8432},
+"particao":0,
+"tipo_cor":"preto e branco",
+"tipo_fundo":"sem fundo"
+}
+
 """    
