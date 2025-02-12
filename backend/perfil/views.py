@@ -15,12 +15,31 @@ class perfilMercadoAPIView(APIView):
         if(request.query_params != {}):
             nameTagGet = request.query_params['nameTag']
             perfis = Perfil.objects.filter(nameTag=nameTagGet)
-            print(perfis)
             if(len(perfis) != 0):
                 itensMercado = ItensMercado.objects.filter(id_Perfil=perfis[0].id_Perfil)
                 serializerItensMercado = ItensMercadoSerializer(itensMercado, many=True)
                 response["ItensMercado"] = serializerItensMercado.data
 
+        else:
+            perfis = Perfil.objects.all()
+
+        serializerPerfil = PerfilSerializer(perfis, many=True)
+        response["perfil"] = serializerPerfil.data
+        
+        return Response(response)
+    
+class perfilMidiaAPIView(APIView):
+    serializer_class = MidiaSerializer
+
+    def get(self, request, *args, **kwargs):
+        response = {}
+        if(request.query_params != {}):
+            nameTagGet = request.query_params['nameTag']
+            perfis = Perfil.objects.filter(nameTag=nameTagGet)
+            if(len(perfis) != 0):
+                midias = Midia.objects.filter(id_Perfil=perfis[0].id_Perfil)
+                serializerMidia = MidiaSerializer(midias, many=True)
+                response["Midia"] = serializerMidia.data
         else:
             perfis = Perfil.objects.all()
 

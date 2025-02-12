@@ -23,10 +23,10 @@ class Perfil(models.Model):
     outrosSites = models.JSONField(default=dict, blank=True)
     tags        = models.JSONField(default=dict)
 
-class midia(models.Model):
+class Midia(models.Model):
     id_Midia     = models.AutoField(primary_key=True, editable=False)
     id_Perfil    = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)
-    foto         = models.ImageField(upload_to=enviar_imagem_midia, blank=True, null=True)
+    foto         = models.ImageField(upload_to=enviar_imagem_midia)
     dataPostagem = models.DateField(auto_now_add=True)
 
 class ItensMercado(models.Model):
@@ -57,7 +57,7 @@ class Itemcompra(models.Model):
     id_ItemCompra   = models.AutoField(primary_key=True, editable=False)
     id_Crompra      = models.ForeignKey(Compra, on_delete=models.DO_NOTHING)
     id_ItensMercado = models.ForeignKey(ItensMercado, on_delete=models.DO_NOTHING)
-    dataEntrega     = models.DateField(blank=True)
+    dataEntrega     = models.DateField(blank=True, null=True)
     detalhes        = models.CharField(max_length=100)
     estatus         = models.CharField(max_length=20, blank=True)
     alerta          = models.CharField(max_length=20, blank=True)
@@ -70,7 +70,7 @@ class Itemcompra(models.Model):
 """
 
 {
-"twitter":"https://x.com/LouisLrnt"
+"x":"https://x.com/LouisLrnt"
 }
 
 {

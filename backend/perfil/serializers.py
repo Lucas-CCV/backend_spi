@@ -28,5 +28,5 @@ class ItemCompraSerializer(serializers.ModelSerializer):
 
 class MidiaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = midia
+        model = Midia
         fields = '__all__'
